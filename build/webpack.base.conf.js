@@ -69,6 +69,14 @@ module.exports = {
         test: /\.pug$/,
         loader: 'pug-loader',
       },
+      {
+        test : /\.scss$/,
+        loader: [
+          "style-loader",
+          "css-loader",
+          "sass-loader"
+        ]
+      }
     ]
   },
   node: {

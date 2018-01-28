@@ -1,36 +1,37 @@
 <template lang="pug">
-  div#app
-    img(src="./assets/logo.png")
-    section.select 
-      button.select-item Good 
-      button.select-item Nice
-    router-view
-    img(src="./assets/logo.png")
-    img(src="./assets/logo.png")
-    img(src="./assets/logo.png")
+div#app
+  //- swiper(v-ref:swiper)
+//-         direction="horizontal"
+//-         :mousewheel-control="true"
+//-         :performance-mode="false"
+//-         :pagination-visible="true"
+//-         :pagination-clickable="true"
+//-         :loop="true"
+//-         @slide-change-start="onSlideChangeStart"
+//-         @slide-change-end="onSlideChangeEnd")
+//-     div Page1
+//-     div Page2
+//-     div Page3
 </template>
 
 <script>
+// import swiper from "./components/vue-swiper/index.vue";
 export default {
   data() {
     return {
-      name: 'app',
-      img_temp: [require("./assets/1.jpg"),
-                  require("./assets/2.jpg")],
+
     };
   },
   mounted() {
-    var dest = document.querySelector(".select");
-    var originOffsetY = dest.offsetTop; 
-    function onScroll(e) {
-      window.scrollY >= originOffsetY + 1 ? dest.classList.add("sticky") : dest.classList.remove("sticky");
-    }
-    window.addEventListener("scroll", onScroll);
+
   },
+  components: {
+    // swiper,
+  }
 }
 </script>
 
-<style>
+<style lang = "scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -5,7 +5,7 @@
          @mousedown="_onTouchStart"
          @wheel="_onWheel">
         <div class="swiper-wrap"
-             v-el:swiper-wrap
+             ref= "swiperwrap"
              :style="{
                 'transform' : 'translate3d(' + translateX + 'px,' + translateY + 'px, 0)',
                 'transition-duration': transitionDuration + 'ms'
@@ -146,7 +146,7 @@
         ready() {
             this._onTouchMove = this._onTouchMove.bind(this);
             this._onTouchEnd = this._onTouchEnd.bind(this);
-            this.slideEls = [].map.call(this.$els.swiperWrap.children, el => el);
+            this.slideEls = [].map.call(this.$refs.swiperwrap.children, el => el);
             if (this.loop) {
                 this.$nextTick(function () {
                     this._createLoop();

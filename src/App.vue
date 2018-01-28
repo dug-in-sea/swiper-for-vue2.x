@@ -1,21 +1,21 @@
 <template lang="pug">
 div#app
-  //- swiper(v-ref:swiper)
-//-         direction="horizontal"
-//-         :mousewheel-control="true"
-//-         :performance-mode="false"
-//-         :pagination-visible="true"
-//-         :pagination-clickable="true"
-//-         :loop="true"
-//-         @slide-change-start="onSlideChangeStart"
-//-         @slide-change-end="onSlideChangeEnd")
-//-     div Page1
-//-     div Page2
-//-     div Page3
+  swiper(v-ref = "swiper"
+        direction="horizontal"
+        :mousewheel-control="true"
+        :performance-mode="false"
+         :pagination-visible="true"
+         :pagination-clickable="true"
+         :loop="true"
+         @slide-change-start="onSlideChangeStart"
+         @slide-change-end="onSlideChangeEnd")
+    div page1
+    div page1
+    div page1
 </template>
 
 <script>
-// import swiper from "./components/vue-swiper/index.vue";
+import swiper from "./components/vue-swiper/index.vue"; 
 export default {
   data() {
     return {
@@ -26,9 +26,9 @@ export default {
 
   },
   components: {
-    // swiper,
+     swiper,
   }
-}
+};
 </script>
 
 <style lang = "scss">

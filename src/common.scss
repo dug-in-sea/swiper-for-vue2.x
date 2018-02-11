@@ -1,0 +1,235 @@
+/*init*/
+html{width: 100%;min-width: 320px;
+	// height: 100%;
+	background: #fff;-webkit-text-size-adjust:100%;}
+body{width: 100%;
+	// min-height: 100%;
+	// font-family:Arial, "Lucida Grande","Helvetica Neue",Helvetica, "Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",STXihei, "华文细黑", Heiti, "黑体", "Microsoft YaHei", "微软雅黑", SimSun, "宋体",sans-serif;margin: 0 auto;overflow-x: hidden}
+	font-family: "Helvetica Neue",Helvetica, Arial, sans-serif, "Microsoft YaHei", "微软雅黑",;margin: 0 auto;overflow-x: hidden}
+	
+h1,h2,h3,h4,h5,h6{margin: 0; font-weight: normal}
+a{color: #333;text-decoration: none;-webkit-tap-highlight-color: rgba(255,255,255,0);}
+b{font-weight: normal;}
+i{font-style: normal;}
+p{margin: 0;}
+ul,ol{margin: 0;padding: 0;}
+li{list-style: none;}
+img{border: 0;}
+img[src=""]{width: auto;height: auto;}
+form{margin: 0;}
+input,select{color: #333;margin: 0;padding: 0;border: none;outline: none;-webkit-appearance: none;}
+textarea{color: #333;padding: 0;border: none;outline: none;-webkit-appearance: none;resize: none;text-align: justify;}
+table{border-collapse: collapse;text-align: center;}
+td,th{padding: 0;}
+.clearfix:after{content: "";display: block;clear: both;height: 0;}
+.clearfix{zoom: 1;}
+.fl{float: left;}
+.fr{float: right;}
+::-webkit-scrollbar{display: none;}
+
+
+*{margin:0; padding:0;box-sizing:border-box;border:none;}
+input,button,select,textarea{outline:none;}
+input,button,select,textarea{outline:none;-webkit-tap-highlight-color: rgba(0, 0, 0, 0); background-color: transparent; }
+[v-cloak] {
+    display: none;
+}
+
+//layout
+.d-flex {
+	display: flex; flex-flow:row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+.d-flex-wrap {
+	display: flex; flex-flow:row wrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+.d-1 {
+    flex:1;
+}
+
+@each $i in 2,4,5,8,10,12,24  {
+	@for $j from 1 through $i {
+		.d-#{$j}-#{$i} {
+			width: $j / $i * 100%;
+		}
+	}
+}
+
+
+//text
+.ta-center {
+	text-align:center;
+}
+.ta-left {
+	text-align: left;
+}
+.ta-right {
+	text-align: right;
+}
+.ta-justify {
+	text-align: justify;
+}
+.d-text-nowrap {
+	width:100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.font-bold {
+	font-weight: bold;
+}
+.lineheight-lg {
+	line-height: 2;
+}
+
+@mixin d-underline($lineH, $bottom, $bgColor) {
+	@extend .pos-rel;
+
+	display: inline-block;
+	white-space: nowrap;
+
+	&:after {
+		content: "";
+		position: absolute;
+		width:100%; left:0;
+		height:$lineH; bottom: $bottom;
+		background-color: $bgColor;
+	}	
+}
+
+//img 
+.img-cover {
+	display: block; 
+	width:100%;
+}
+
+
+//position
+.pos-rel {
+	position: relative;
+}
+.pos-abs {
+	position: absolute;
+}
+.pos-fix {
+	position: fixed;
+}
+
+.d-both-center {
+	@extend .pos-abs;
+
+    display: block; 
+    left:50%; top:50%;
+	transform: translate(-50%,-50%);	
+}
+.d-x-center {
+    @extend .pos-abs;
+
+    display: block;
+    left:50%;
+    transform: translate(-50%, 0);
+}
+.d-y-center {
+    @extend .pos-abs;
+
+    display: block;
+    top:50%; 
+    transform: translate(0, -50%);
+}
+
+
+
+
+
+.none {
+	display: none;
+}
+.cancel-event {
+	pointer-events: none;
+}
+.accelerate {
+    transform: translateZ(0);
+}
+
+
+//transition
+@for $i from 1 through 10 {
+    .trans-#{$i} {
+        transition: all $i *0.1s ease;
+    }
+}
+//从底部划上来
+.bottom-slide-enter {
+    transform: translate3d(-50%, 8rem, 0) !important;
+    opacity: 0;
+}
+.bottom-slide-enter-active {
+	transition: all .3s ease-out;
+}
+.bottom-slide-leave-active {
+    transition: all .3s ease-out;
+}
+.bottom-slide-leave-to {
+    transform: translate3d(-50%,8rem, 0) !important;
+}
+//从右边上来
+.right-slide-enter {
+    transform: translate3d(130%, -50%, 0) !important;
+    opacity: 0;
+}
+.right-slide-enter-active {
+	transition: all .3s ease-out;
+}
+.right-slide-leave-active {
+    transition: all .3s ease-out;
+}
+.right-slide-leave-to {
+    transform: translate3d(130%, -50%, 0) !important;
+}
+//透明度渐变出现
+.wrap-flash-enter {
+	opacity: 0;
+}
+.wrap-flash-enter-active {
+	transition: all .3s ease-in-out;
+}
+.wrap-flash-leave-active {
+    transition: all .3s ease;
+}
+.wrap-flash-leave-to {
+    opacity: 1;
+}
+//从中间变大
+.center-exposed-enter {
+    transform: translate3d(-50%,-50%,0) scale(0.5)  !important;
+    opacity: 0.2;
+}
+.center-exposed-enter-active {
+	transition: all .3s ease-out;
+}
+.center-exposed-enter-to {
+    transform: translate3d(-50%,-50%,0) scale(1.2)  !important;		
+}
+.center-exposed-leave-active {
+    transition: all .3s ease-out;
+}
+.center-exposed-leave-to {
+    transform: translate3d(-50%,-50%,0) scale(0.1) !important;
+    opacity:0;
+}
+
+//列表离开
+// .list-hide-leave-active {
+//     transition: all 30s ease;
+// }
+// .list-hide-leave-to {
+//     transform: translate(100%,0);
+//     opacity: 0;
+// }
+

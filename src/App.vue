@@ -1,37 +1,21 @@
 <template lang="pug">
 div#app
-  swiper(v-ref = "swiper"
-        direction="horizontal"
-        :mousewheel-control="true"
-        :performance-mode="false"
-         :pagination-visible="true"
-         :pagination-clickable="true"
-         :loop="true"
-         @slide-change-start="onSlideChangeStart"
-         @slide-change-end="onSlideChangeEnd")
-    div page1
-    div page1
-    div page1
+  Swiper.swiper-body(direction= "horizontal",
+        :noAnimation = "false",
+        :loop = "true",
+        :paginationVisible = "true",
+        :paginationClickable = "true"
+        ref = "swiper"
+        @pageChange = "pageChange",
+        ) 
+    div.swiper-item(v-for = "(item, index) in picList" 
+    :class = "{on : index + 1 == current_page, off: index + 1 != current_page }") 
+      img(:src = "item.pic")
+      h3.d-both-center {{index + 1}}
 </template>
 
-<script>
-import swiper from "./components/vue-swiper/index.vue"; 
-export default {
-  data() {
-    return {
-
-    };
-  },
-  mounted() {
-
-  },
-  components: {
-     swiper,
-  }
-};
-</script>
-
 <style lang = "scss">
+@import "./common.scss";
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -40,14 +24,67 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.selet {
-  position: sticky;
-  top:0;
+.swiper-body {
+  position: relative;
 }
-.sticky {
-  position: fixed;
-  left:50%;
-  transform: translate(-50%,0); 
-  top:0;
+.swiper-item {
+  position: relative;
+  transform: translate(22%, 0);
+  img{
+    width:80%;
+    margin: 0 auto;
+    display: block;
+  }
+  &.on {
+    img {
+      width: 100%;
+    }
+  }
+  &.off {
+    img {
+      width:80%;
+      margin:0.2rem auto;
+    }
+  }
 }
 </style>
+
+
+<script>
+import Swiper from "./components/vue-swiper/index.vue"; 
+import Bigo from "bigoapi";
+import tool from "./tool.js";
+import eruda from "eruda";
+
+eruda.init();
+export default {
+  data() {
+    return {
+      current_page : 1,
+      picList: [
+        {pic: require("./assets/p1.png")},
+        {pic: require("./assets/p2.png")},
+        {pic: require("./assets/p3.png")},
+        {pic: require("./assets/p4.png")},
+        {pic: require("./assets/p5.png")},
+      ],
+    };
+  },
+  computed: {
+  },
+  methods: {
+    pageChange(index) {
+       this.current_page = index;
+    }
+  },
+  created() {
+    tool.htmlRemInit();
+  },
+  mounted() {
+  },
+  components: {
+     Swiper,
+  },
+};
+</script>
+

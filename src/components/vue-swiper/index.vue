@@ -16,13 +16,16 @@
         <div class="swiper-pagination"
              v-show="paginationVisible">
             <span class="swiper-pagination-bullet"
-                  :class="{'active': $index+1===currentPage}"
-                  v-for="slide in slideEls"
-                  @click="paginationClickable && setPage($index+1)"></span>
+                  :class="{'active': index+1===currentPage}"
+                  v-for="(item, index) in slideEls"
+                  @click="paginationClickable && setPage(index+1)"
+                  :key = index>
+            </span>
         </div>
     </div>
 </template>
-<style lang="scss">
+
+<style lang="scss" scoped>
 .swiper {
     position: relative;
     overflow: hidden;
@@ -36,7 +39,8 @@
       > div {
         overflow: hidden;
         flex-shrink: 0;
-        width: 100%;
+        // width: 100%; 
+        width: 70%;
         height: 100%;
       }
     }
@@ -143,7 +147,7 @@
                 transitionDuration: 0
             };
         },
-        ready() {
+        mounted() {
             this._onTouchMove = this._onTouchMove.bind(this);
             this._onTouchEnd = this._onTouchEnd.bind(this);
             this.slideEls = [].map.call(this.$refs.swiperwrap.children, el => el);
@@ -160,6 +164,7 @@
             next() {
                 var page = this.currentPage;
                 if (page < this.slideEls.length || this.loop) {
+                    console.log("run next");
                     this.setPage(page + 1);
                 } else {
                     this._revert();
@@ -174,7 +179,9 @@
                 }
             },
             setPage(page, noAnimation) {
+                console.log("setPage!", page);
                 var self = this;
+
                 this.lastPage = this.currentPage;
                 if (page === 0) {
                     this.currentPage = this.slideEls.length;
@@ -183,12 +190,14 @@
                 } else {
                     this.currentPage = page;
                 }
+                console.log("getTranslateofPage", self._getTranslateOfPage(page));
 
                 if (this.loop) {
                     if (this.delta === 0) {
                         this._setTranslate(self._getTranslateOfPage(this.lastPage));
                     }
-                    setTimeout(function () {
+                    setTimeout(function () { 
+                        console.log(self._getTranslateOfPage(page));
                         self._setTranslate(self._getTranslateOfPage(page));
                         if (noAnimation) return;
                         self._onTransitionStart();
@@ -198,6 +207,9 @@
                     if (noAnimation) return;
                     this._onTransitionStart();
                 }
+                //add 向外emit pageChnage事件
+                var _page = this.currentPage;
+                this.$emit("pageChange", _page);
             },
             isHorizontal() {
                 return this.direction === HORIZONTAL;
@@ -286,6 +298,13 @@
                 } else {
                     this.$emit('slide-revert-end', this.currentPage);
                 }
+                //add 
+                var len = this.slideEls.length;
+                if (this.currentPage == 1) {
+                    this.setPage(1, true);
+                } else if (this.currentPage == len) {
+                    this.setPage(len, true);
+                }
             },
             _isPageChanged() {
                 return this.lastPage !== this.currentPage;
@@ -308,11 +327,20 @@
             },
             _createLoop() {
                 var propName = this.isHorizontal() ? 'clientWidth' : 'clientHeight';
-                var swiperWrapEl = this.$els.swiperWrap;
+                var swiperWrapEl = this.$refs.swiperwrap;
                 var duplicateFirstChild = swiperWrapEl.firstElementChild.cloneNode(true);
                 var duplicateLastChild = swiperWrapEl.lastElementChild.cloneNode(true);
+
+                
+                duplicateFirstChild.classList.remove("on");
+                duplicateFirstChild.classList.add("off");
+                duplicateLastChild.classList.remove("on");                
+                duplicateFirstChild.classList.add("off"); 
+                               
                 swiperWrapEl.insertBefore(duplicateLastChild, swiperWrapEl.firstElementChild);
                 swiperWrapEl.appendChild(duplicateFirstChild);
+
+
                 this.translateOffset = -duplicateLastChild[propName];
             }
         }
